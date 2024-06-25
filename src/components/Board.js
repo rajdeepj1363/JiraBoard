@@ -1,30 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import Story from "./Story";
+import { BoardSubBox, BoardSubBoxTitle, BoardWrapper } from "../container/CommonUI";
 
-const BoardWrapper = styled.div`
-  margin-top: 2rem;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  background-color: #F8EDFF;
-  height: 80vh;
-`;
-
-const BoardSubBox = styled.div`
-  flex: 1 0 auto;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  overflow-y: auto;
-  ::-webkit-scrollbar{
-    display: none;
-  }
-`;
-
-const BoardSubBoxTitle = styled.h2``;
 function Board(props) {
   const {
     stories: { todo, inprogress, completed },
