@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import AddStory from "./components/AddStory";
+import Board from "./components/Board";
+
+const AppWrapper = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url("https://png.pngtree.com/background/20221215/original/pngtree-water-color-cloudy-blue-sky-texture-background-picture-image_1985792.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding: 1.125rem 4rem;
+    overflow: hidden;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppWrapper>
+        <AddStory/>
+        <Board/>
+    </AppWrapper>
   );
 }
+
 
 export default App;
