@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import store from '../store/store';
-import { Button, ComponentWrapper, InputBox } from '../container/CommonUI';
+import { Button, ComponentWrapper, InputBox } from '../common/CommonUI';
+import { ADD_STORY_PLACEHOLDER } from '../common/Constants';
+import { ADD_STORY } from '../store/reducerTypes';
 
 function AddStory() {
 
@@ -10,7 +12,7 @@ function AddStory() {
     event.preventDefault();
     if(story.trim() !== "")
     {
-      store.dispatch({type:"add-story",payload:story})
+      store.dispatch({type:ADD_STORY,payload:story})
       setStory("")
     }
     else
@@ -19,8 +21,8 @@ function AddStory() {
   return (
     <ComponentWrapper>
         <form onSubmit={handlePreSubmit}>
-            <InputBox placeholder='Enter jira story title' value={story} onChange={(e)=>setStory(e.target.value)}/>
-            <Button type='submit'>Add</Button>
+            <InputBox placeholder={ADD_STORY_PLACEHOLDER} value={story} onChange={(e)=>setStory(e.target.value)}/>
+            <Button>Add</Button>
         </form>
     </ComponentWrapper>
   )

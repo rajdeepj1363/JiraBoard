@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import Story from "./Story";
-import { BoardSubBox, BoardSubBoxTitle, BoardWrapper } from "../container/CommonUI";
+import { BoardSubBox, BoardSubBoxTitle, BoardWrapper } from "../common/CommonUI";
+import store from "../store/store";
+import { COMPLETED, INPROGRESS, TODO } from "../common/Constants";
+import { UPDATE_STORY } from "../store/reducerTypes";
 
 function Board(props) {
   const {
@@ -12,28 +15,28 @@ function Board(props) {
     ev.preventDefault();
   }
 
-  function drop(ev) {
+  function drop(ev, cat) {
     ev.preventDefault();
     console.log("Drop",ev);
-    var data = ev.dataTransfer.getData("text");
-    console.log("Drop data: ",data);
-    ev.target.appendChild(document.getElementById(data));
+    let id = ev.dataTransfer.getData("id");
+    console.log("Drop data: ",id);
+    store.dispatch({type:UPDATE_STORY,payload: {id,updateTo:cat}});
   }
 
-  function drag(ev) {
+  function drag(ev, id) {
     console.log("Drag",ev);
-    console.log(ev.target.parentElement.nextSibling);
-    ev.target.parentElement.nextSibling.appendChild(ev.target)
+    ev.dataTransfer.setData("id",id);
   }
+
   return (
     <BoardWrapper>
-      <BoardSubBox id="todo-stories" onDrop={(event)=> drop(event)} onDragOver={(e)=>allowDrop(e)}>
+      <BoardSubBox id="todo-stories" onDrop={(event)=> drop(event, TODO)} onDragOver={(e)=>allowDrop(e)}>
         <BoardSubBoxTitle>Open Stories</BoardSubBoxTitle>
         {todo.length > 0
           ? todo.map((story) => (
-              <div draggable="true" onDragStart={(e)=>drag(e)}>
+              story.status === TODO && 
+              <div key={story.id} draggable="true" onDragStart={(e)=>drag(e, story.id)}>
                 <Story
-                  key={story.id}
                   id={story.id}
                   title={story.title}
                   status={story.status}
@@ -42,19 +45,25 @@ function Board(props) {
             ))
           : "No stories planned!"}
       </BoardSubBox>
-      <BoardSubBox id="inprogress-stories" onDrop={(event)=> drop(event)} onDragOver={(e)=>allowDrop(e)}>
+      <BoardSubBox id="inprogress-stories" onDrop={(event)=> drop(event, INPROGRESS)} onDragOver={(e)=>allowDrop(e)}>
         <BoardSubBoxTitle>InProgress Stories</BoardSubBoxTitle>
         {inprogress.length > 0
           ? inprogress.map((story) => (
-              <div onDrop={(event)=> drop(event)} onDragOver={(e)=>allowDrop(e)}><Story id={story.id} title={story.title} /></div>
+              story.status === INPROGRESS && 
+              <div key={story.id}  draggable="true" onDragStart={(e)=>drag(e, story.id)}>
+                <Story id={story.id} title={story.title} status={story.status} />
+                </div>
             ))
           : null}
-      </BoardSubBox>
-      <BoardSubBox id="completed-stories">
+      </BoardSubBox >
+      <BoardSubBox id="completed-stories" onDrop={(event)=> drop(event, COMPLETED)} onDragOver={(e)=>allowDrop(e)}>
         <BoardSubBoxTitle>Completed Stories</BoardSubBoxTitle>
         {completed.length > 0
           ? completed.map((story) => (
-              <Story id={story.id} title={story.title} />
+              story.status === COMPLETED && 
+              <div key={story.id} draggable="true" onDragStart={(e)=>drag(e, story.id)}>
+                <Story id={story.id} title={story.title} status={story.status} />
+                </div>
             ))
           : null}
       </BoardSubBox>

@@ -83,13 +83,15 @@ export const StoryNumberText = styled.p`
   position: absolute;
   top: 0;
   left: 0;
+  margin-right: 10px;
   font-size: 14px;
   font-weight: 400;
 `;
 export const StoryStatusText = styled.p`
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
+  margin-right: 10px;
   font-size: 14px;
   font-weight: 400;
 `;
@@ -103,5 +105,24 @@ export const StoryTitleText = styled.h3`
 `;
 
 export const divStyle = {
-  position: "relative",
+  position: "static",
 };
+
+
+// Delete story button
+
+export const DeleteStoryBtn = styled.button`
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0.3rem 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover{
+      background-color: red;
+      color: white;
+    }
+`;

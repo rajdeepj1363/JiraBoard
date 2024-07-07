@@ -1,12 +1,17 @@
 import React from "react";
-import { StoryNumberText, StoryTitleText, StoryWrapper, divStyle } from "../container/CommonUI";
+import { StoryNumberText, StoryStatusText, StoryTitleText, StoryWrapper, divStyle } from "../common/CommonUI";
+import DeleteStory from "./DeleteStory";
 
 function Story(props) {
-  const { id, title } = props;
+  const { id, title, status } = props;
   return (
     <StoryWrapper>
       <div style={divStyle}>
-        <StoryNumberText>CAAX-{id}</StoryNumberText>
+        <StoryNumberText>STR-{id}</StoryNumberText>
+      </div>
+      <DeleteStory id={id}></DeleteStory>
+      <div style={divStyle}>
+        <StoryStatusText>{status}</StoryStatusText>
       </div>
       <StoryTitleText>{title}</StoryTitleText>
     </StoryWrapper>
